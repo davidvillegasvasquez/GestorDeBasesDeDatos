@@ -1,9 +1,9 @@
 #1ero definimos los subdicts por tipo de widgets:
-variableDeControl = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. 
+variableDeControl = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. 
 
 infoEntrysCuerpoSup = {'txtBox_PathBD':{'tipoWidget':'entry', 'ancho':9, 'varcontrol':'pathBD', 'col':2, 'fila':1, 'sticky':'NSEW'}}
 
-infoComboboxCuerpoSup = { 'comboBox_tipoBD':{'tipoWidget':'combobox', 'ancho':7, 'varcontrol':'tipoBD', 'col':4, 'fila':1, 'sticky':'NSEW'}, 'comboBox_Tablas':{'tipoWidget':'combobox', 'ancho':7, 'varcontrol':'tabla', 'col':2, 'fila':2, 'sticky':'NSEW'}}
+infoComboboxCuerpoSup = { 'comboBox_tipoBD':{'tipoWidget':'combobox', 'ancho':7, 'col':4, 'fila':1, 'sticky':'NSEW'}, 'comboBox_Tablas':{'tipoWidget':'combobox', 'ancho':7, 'col':2, 'fila':2, 'sticky':'NSEW'}}
 
 infoLabelsCuerpoSup = {'etiqPathBD':{'tipoWidget':'label', 'texto':'PathBaseDeDatos', 'col':1, 'fila':1, 'sticky':'NSEW'}, 'etiqTipoBD':{'tipoWidget':'label', 'texto':'TipoBaseDeDatos', 'col':3, 'fila':1, 'sticky':'NSEW'}, 'etiqTablas':{'tipoWidget':'label', 'texto':'Tablas', 'col':1, 'fila':2, 'sticky':'NSEW'}}
 

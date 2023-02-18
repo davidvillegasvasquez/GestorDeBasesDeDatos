@@ -12,7 +12,8 @@ class WidgetMarco:
         #Creamos los widgets en la subdivisión cuerpo superior de self.framePadre, que es a su vez argraiz, al final raiz del módulo entrada.py
         self.widgetSuperior = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_superior)
         #Y de dónde salió el atributo self.comboBox_tipoBD: claramente acaba de ser creado arriba con self.widgetSuperior
-        self.comboBox_tipoBD['values'] = BaseDeDatosTipos #Sirve, pero entonces tendría que crear su variable de control en este módulo: de que me sirve self.tipoBD.
+        self.comboBox_tipoBD['values'] = BaseDeDatosTipos
+        self.comboBox_Tablas['values'] = ('ventas', 'articulos', 'etc') #Origen (función, método objeto, etc.)
         self.botonPrimer = ttk.Button(self.framePadre.cuerpo_inferior, command=lambda: self.actualizarWidgetsEnNuevaPosicion(nuevaPosicionLuegoDePulsarBoton("irAprimerRegistro", self.posicion)), text="<<", width=3)
         self.botonPrimer.grid(column=0, row=1, sticky=NSEW)
         self.botonRetro = ttk.Button(self.framePadre.cuerpo_inferior, text="<", width=2, command=lambda: self.actualizarWidgetsEnNuevaPosicion(nuevaPosicionLuegoDePulsarBoton("retroceder", self.posicion)))
