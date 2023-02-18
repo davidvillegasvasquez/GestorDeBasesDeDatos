@@ -20,6 +20,9 @@ def crearWidgetsYsusVarControlEnBaseAdescrip(widget, widgetPadre):
         
         if tipo == "entry":
             setattr(widget, nombreWidget, ttk.Entry(widgetPadre, width=val['ancho'], textvariable = widget.__dict__[val['varcontrol']]))
+            
+        if tipo == "combobox":
+            setattr(widget, nombreWidget, ttk.Combobox(widgetPadre, width=val['ancho'], values = widget.__dict__[val['varcontrol']]))            
         
         if tipo == "hoja":
             setattr(widget, nombreWidget, Sheet(widgetPadre, column_width=70, align="center", header_align="center", height=130, width=250, headers = infoChild['columnas'][1:])) #Siempre quitaremos el campo clave entre el padre e hijo. Aquí lo hacemos desde el descriptor, de modo que no tiene indice y siempre cortamos a partir de 1 ([1:]). 
