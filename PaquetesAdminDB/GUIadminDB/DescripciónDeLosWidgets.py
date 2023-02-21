@@ -1,5 +1,5 @@
 #1ero definimos los subdicts por tipo de widgets:
-variableDeControl = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. 
+variableDeControlCuerpoSuperior = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. 
 
 infoEntrysCuerpoSup = {'txtBox_PathBD':{'tipoWidget':'entry', 'ancho':9, 'varcontrol':'pathBD', 'col':2, 'fila':1, 'sticky':''}}
 
@@ -9,7 +9,7 @@ infoLabelsCuerpoSup = {'etiqPathBD':{'tipoWidget':'label', 'texto':'PathBaseDeDa
 
 infoButtonCuerpoSup = { 'botón_conectarBD':{'tipoWidget':'botón', 'ancho':7, 'col':3, 'fila':2, 'sticky':'nsew'}} 
 
-descripWidgetsCuerpoSup = {**variableDeControl, **infoEntrysCuerpoSup, **infoLabelsCuerpoSup, **infoComboboxCuerpoSup, **infoButtonCuerpoSup} #Y así se concatenan los diccionario de diccionarios para decrip de widgets contenidos en cuerpo superior. 
+descripWidgetsCuerpoSup = {**variableDeControlCuerpoSuperior, **infoEntrysCuerpoSup, **infoLabelsCuerpoSup, **infoComboboxCuerpoSup, **infoButtonCuerpoSup} #Y así se concatenan los diccionario de diccionarios para decrip de widgets contenidos en cuerpo superior. 
 #Ojo, el orden importa: primero **variableDeControl, puesto que los textvariable no dependen de la existencia de los entrys, más no así el caso contrario.
 
 #descripWidgetsCuerpoMedio = {'nombreWidget':{'tipoWidget':'hojaPorEj', 'ancho':9, 'col':0, 'fila':0, 'sticky':'NSWE'}}
