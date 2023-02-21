@@ -22,10 +22,10 @@ def crearWidgetsYsusVarControlEnBaseAdescrip(widget, widgetPadre):
             setattr(widget, nombreWidget, ttk.Entry(widgetPadre, width=val['ancho'], textvariable = widget.__dict__[val['varcontrol']]))
             
         if tipo == "combobox":
-            setattr(widget, nombreWidget, ttk.Combobox(widgetPadre, width=val['ancho']))#, values = widget.__dict__[val['varcontrol']]))
+            setattr(widget, nombreWidget, ttk.Combobox(widgetPadre, width=val['ancho'], textvariable = widget.__dict__[val['varcontrol']]))
             
         if tipo == "botón":
-            setattr(widget, nombreWidget, ttk.Button(widgetPadre, width=val['ancho'], text = 'conectar', command =''))              
+            setattr(widget, nombreWidget, ttk.Button(widgetPadre, width=val['ancho'], text = 'conectar'))              
                               
         
         if tipo == "hoja":

@@ -27,8 +27,9 @@ class conexiónConBD:
         except:
                 messagebox.showerror(message='Ocurrió un error con la instrucción sql al parecer.', title='Error')
         finally:
-            return resultado      
-        
+            return resultado
+                  
+    #@consultaSql  ...debo implementar un decorador en el resto de los métodos para eliminar el código repetido. Tarea pendiente.   
     def listaDecolumnasDeTabla(self, tabla, *args):
         cursor = self.conexión.cursor()
         cursor.execute(sql.SQL('SELECT * FROM {} LIMIT 0').format(sql.SQL(tabla))) #SQL string composition.

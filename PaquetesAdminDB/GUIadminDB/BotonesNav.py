@@ -15,7 +15,9 @@ class WidgetMarco:
         self.comboBox_tipoBD['values'] = BaseDeDatosTipos
          #Y de dónde salió el atributo self.comboBox_tipoBD: claramente acaba de ser creado arriba con self.widgetSuperior = crearWidgetsYsusVarControlEnBaseAdescrip()
         self.comboBox_Tablas['values'] = ('ventas', 'articulos', 'etc') #Origen (función, método objeto, etc.)
-        
+        #Probando el limpiador de widgets:
+        print(self.widgetSuperior)
+        self.botón_conectarBD['command'] = lambda: [widget.destroy() for widget in self.framePadre.cuerpo_superior.grid_slaves()]
         
         self.botonPrimer = ttk.Button(self.framePadre.cuerpo_inferior, command=lambda: self.actualizarWidgetsEnNuevaPosicion(nuevaPosicionLuegoDePulsarBoton("irAprimerRegistro", self.posicion)), text="<<", width=3)
         self.botonPrimer.grid(column=0, row=1, sticky=NSEW)
