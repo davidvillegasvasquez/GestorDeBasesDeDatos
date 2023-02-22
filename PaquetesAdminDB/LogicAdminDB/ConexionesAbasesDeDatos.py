@@ -11,7 +11,7 @@ class conexiónConBD:
         self.path = ubicación
         self.tipo = tipo
         try:
-            if self.tipo == 'postgre': self.conexión = psycopg2.connect(**configuración(self.path))
+            if self.tipo == 'postgresql': self.conexión = psycopg2.connect(**configuración(self.path))
             if self.tipo == 'sqlite' : self.conexión = sqlite3.connect(self.path)  
             
         except:
@@ -37,12 +37,16 @@ class conexiónConBD:
         cursor.close()
         return listaDeColumnas
         
-    def listaDeTablasEnLaBaseDeDatos(self, *args):
-        cursor = self.conexión.cursor()
-        if self.tipo == 'postgre': argsql = 'SELECT table_name FROM information_schema.tables WHERE table_schema="public"'
-        if self.tipo == 'sqlite': argsql = 'SELECT name FROM sqlite_master WHERE type ="table" AND name NOT LIKE "sqlite_%"'
-        cursor.execute(argsql)
-        listaDeTablas = cursor.fetchall()
-        cursor.close()
-        return listaDeTablas       
+    def listaDeTablasEnLaBaseDeDatosConectada(self, *args):
+        if self.conexión is not None: 
+            if self.tipo is not None:
+                if self.tipo == 'postgresql': argsql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
+                if self.tipo == 'sqlite': argsql = 'SELECT name FROM sqlite_master WHERE type ="table" AND name NOT LIKE "sqlite_%"'
+                return self.consultaSql(argsql)
+            else:
+                messagebox.showwarning(message='Debe elegir el tipo de base de dato.', title='Error') 
+                return  
+        else:
+            messagebox.showerror(message='No hubo conexión, revise si está correcto el path de acceso hacia esta.', title='Error')    
+                
                                      

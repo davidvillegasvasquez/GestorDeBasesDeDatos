@@ -25,7 +25,7 @@ def crearWidgetsYsusVarControlEnBaseAdescrip(widget, widgetPadre):
             setattr(widget, nombreWidget, ttk.Combobox(widgetPadre, width=val['ancho'], textvariable = widget.__dict__[val['varcontrol']]))
             
         if tipo == "botón":
-            setattr(widget, nombreWidget, ttk.Button(widgetPadre, width=val['ancho'], text = 'conectar'))              
+            setattr(widget, nombreWidget, ttk.Button(widgetPadre, width=val['ancho'], text = val['texto'], command = val['comando']))             
                               
         
         if tipo == "hoja":
@@ -35,5 +35,5 @@ def crearWidgetsYsusVarControlEnBaseAdescrip(widget, widgetPadre):
         
         #Por último, dibujamos el widget. Aquí si debemos filtrar que no sea un atributo-objeto tipo variable de control tkinter para poder dibujarlo:
         if tipo != "controlvar":
-            widget.__dict__[nombreWidget].grid(column=val['col'], row=val['fila'], sticky=val['sticky'])
+            widget.__dict__[nombreWidget].grid(column=val['col'], row=val['fila'], sticky=val['sticky'], columnspan = val['columnspan'])
 

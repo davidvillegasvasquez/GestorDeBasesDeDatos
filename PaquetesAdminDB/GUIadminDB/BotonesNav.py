@@ -13,11 +13,14 @@ class WidgetMarco:
         self.posicion = -1
         #Creamos los widgets en la subdivisión cuerpo superior de self.framePadre, que es a su vez argraiz, al final raiz del módulo entrada.py
         self.widgetSuperior = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_superior)
-        self.comboBox_tipoBD['values'] = BaseDeDatosTipos
-         #Y de dónde salieron los atributos nuevos, self.comboBox_tipoBD y self.botón_conectarBD: claramente acaban de ser creados arriba con self.widgetSuperior = crearWidgetsYsusVarControlEnBaseAdescrip()
-        self.comboBox_Tablas['values'] = ('ventas', 'articulos', 'etc') #Origen (función, método objeto, etc.)
-        #self.botón_conectarBD['command'] = lambda: [widget.destroy() for widget in self.framePadre.cuerpo_superior.grid_slaves()] #Así sería si no necesitaramos más proposiciones. Sólo barrer todos los widgets para el cuerpo en cuestión.
+        
+        #Con los nuevos widgets creados en self.framePadre, específicamente en cuerpo superior para este, procedemos a configurarlos:
+        self.comboBox_Tablas['state'] = 'readonly' 
+        self.comboBox_tipoBD.config(values = BaseDeDatosTipos, state = 'readonly')  #Con el atributo .config(), podemos hacer múltiples configuraciones simultaneamente.
+        #No he encontrado una manera de definir el atributo command del botón desde Crear.py. Tarea pendiente:
         self.botón_conectarBD['command'] = lambda: self.widgetsParaCuerpoMedioSegunBaseDeDatosConectada()
+        
+        #Creamos los botones de navegación:
         self.botonPrimer = ttk.Button(self.framePadre.cuerpo_inferior, command=lambda: self.actualizarWidgetsEnNuevaPosicion(nuevaPosicionLuegoDePulsarBoton("irAprimerRegistro", self.posicion)), text="<<", width=3)
         self.botonPrimer.grid(column=0, row=1, sticky=NSEW)
         self.botonRetro = ttk.Button(self.framePadre.cuerpo_inferior, text="<", width=2, command=lambda: self.actualizarWidgetsEnNuevaPosicion(nuevaPosicionLuegoDePulsarBoton("retroceder", self.posicion)))
@@ -37,13 +40,20 @@ class WidgetMarco:
         self.etiqImagenFoto['image'] = self.fotosPIL[self.posicion]
         """
     def widgetsParaCuerpoMedioSegunBaseDeDatosConectada(self, *args):
-        #Dos formas de acceder a los contenidos de un widget tipo entry o combobox: por su variable de control o su propiedad.
+        #Dos formas de acceder a los contenidos de un widget tipo entry o combobox: por su variable de control o su atributo-método, .get().
         #Note que aquí no es necesario especificar la localización global del widget (self.framePadre.cuerpo_superior), sólo self.comboBox a secas:
-        print('self.comboBox_tipoBD.get() =', self.comboBox_tipoBD.get())
-        print('self.pathBD.get() =', self.pathBD.get())
-     
-        [widget.destroy() for widget in self.framePadre.cuerpo_superior.grid_slaves()] #Medio palo.
-        #print('self.txtBox_PathBD.get() =', self.txtBox_PathBD.get()) # Después de borrar el widget, ya no podemos acceder a él: invalid command name ".!frame.!entry"
+        #print('self.comboBox_tipoBD.get() =', self.comboBox_tipoBD.get())
+        #print('self.pathBD.get() =', self.pathBD.get())
+        #self.conect.close()
+        #[widget.destroy() for widget in self.framePadre.cuerpo_superior.grid_slaves()] #Medio palo.
         
+        if self.comboBox_tipoBD.get() is not None:
+            self.conect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
+            self.comboBox_Tablas['values'] = self.conect.listaDeTablasEnLaBaseDeDatosConectada()      
+        else:
+            messagebox.showwarning(message='Debe elegir el tipo de base de datos!', title='Se le olvidó el tipo de base de datos!') 
+            #Algunos path para probar:
+            # /home/david/Documentos/bancoPsql.ini
+            # /home/david/Documentos/Informática/sqlite/primera.db o ventas.db o bd1.db
         
                                        
