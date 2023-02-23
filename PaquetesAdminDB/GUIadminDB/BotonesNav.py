@@ -5,6 +5,7 @@ from PaquetesAdminDB.LogicAdminDB.Posicionamiento import *
 from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import BaseDeDatosTipos
 from PaquetesAdminDB.LogicAdminDB.ConexionesAbasesDeDatos import conexiónConBD
 #from PaquetesAdminDB.LogicAdminDB.FuncionesVarias import *
+from tkinter import messagebox
 
 class WidgetMarco:
     def __init__(self, argraiz):
@@ -13,10 +14,11 @@ class WidgetMarco:
         self.posicion = -1
         #Creamos los widgets en la subdivisión cuerpo superior de self.framePadre, que es a su vez argraiz, al final raiz del módulo entrada.py
         self.widgetSuperior = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_superior)
-        
+        self.objectConnect = None
         #Con los nuevos widgets creados en self.framePadre, específicamente en cuerpo superior para este, procedemos a configurarlos:
         self.comboBox_Tablas['state'] = 'readonly' 
         self.comboBox_tipoBD.config(values = BaseDeDatosTipos, state = 'readonly')  #Con el atributo .config(), podemos hacer múltiples configuraciones simultaneamente.
+        self.comboBox_tipoBD.bind("<<ComboboxSelected>>", self.metodoX) #No se coloca argumentos en bind.
         #No he encontrado una manera de definir el atributo command del botón desde Crear.py. Tarea pendiente:
         self.botón_conectarBD['command'] = lambda: self.widgetsParaCuerpoMedioSegunBaseDeDatosConectada()
         
@@ -40,20 +42,18 @@ class WidgetMarco:
         self.etiqImagenFoto['image'] = self.fotosPIL[self.posicion]
         """
     def widgetsParaCuerpoMedioSegunBaseDeDatosConectada(self, *args):
-        #Dos formas de acceder a los contenidos de un widget tipo entry o combobox: por su variable de control o su atributo-método, .get().
-        #Note que aquí no es necesario especificar la localización global del widget (self.framePadre.cuerpo_superior), sólo self.comboBox a secas:
-        #print('self.comboBox_tipoBD.get() =', self.comboBox_tipoBD.get())
-        #print('self.pathBD.get() =', self.pathBD.get())
-        #self.conect.close()
+       
         #[widget.destroy() for widget in self.framePadre.cuerpo_superior.grid_slaves()] #Medio palo.
         
-        if self.comboBox_tipoBD.get() is not None:
-            self.conect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
-            self.comboBox_Tablas['values'] = self.conect.listaDeTablasEnLaBaseDeDatosConectada()      
-        else:
-            messagebox.showwarning(message='Debe elegir el tipo de base de datos!', title='Se le olvidó el tipo de base de datos!') 
-            #Algunos path para probar:
-            # /home/david/Documentos/bancoPsql.ini
-            # /home/david/Documentos/Informática/sqlite/primera.db o ventas.db o bd1.db
+        self.objectConnect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
+        if self.objectConnect.conexión is not None and self.objectConnect is not None:
+            self.comboBox_Tablas['values'] = self.objectConnect.listaDeTablasEnLaBaseDeDatosConectada() #Tarea: tratar de meter todo esto en una lambda. 
+            
+    def metodoX(self, nombreArbitrario, *args): #Si declaro un parámetro formal con un nombre arbitrário en la función enlazada al widget, tomará el valor seleccionado de dicho widget con el atributo método widget.get():              
+        messagebox.showwarning(message=f'Selecionó {nombreArbitrario.widget.get()}', title='Selección')
+        
+        
+                   
+            
         
                                        
