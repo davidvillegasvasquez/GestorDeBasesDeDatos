@@ -1,2 +1,3 @@
-#Ignorando archivos .txt:
+#Ignorando archivos .txt y .png:
 *.txt
+*.png

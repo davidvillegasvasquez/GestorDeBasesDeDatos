@@ -6,7 +6,7 @@ from psycopg2 import sql
 import os
 
 class conexiónConBD:
-    """Para postgresql, ubicación es el path de su respectivo archivo .ini. Se debe cerrar la conexión desde el sitio de instanciación, desde el cliente usuaria de la clase. Tarea: ver si se puede hacer un decorador para los métodos y no repetir tanto el código parecido."""
+    """Para postgresql, ubicación es el path de su respectivo archivo .ini."""
     def __init__(self, ubicación, tipo):
         self.tipo = tipo
         self.path = ubicación
@@ -40,7 +40,7 @@ class conexiónConBD:
     def listaDecolumnasDeTabla(self, tabla, *args):
         cursor = self.conexión.cursor()
         cursor.execute(sql.SQL('SELECT * FROM {} LIMIT 0').format(sql.SQL(tabla))) #SQL string composition.
-        columnas = [col[0] for col in cursor.description]  #No sirve tupla.                                
+        listaDeColumnas = [col[0] for col in cursor.description]  #No sirve tupla.                                
         cursor.close()
         return listaDeColumnas
         

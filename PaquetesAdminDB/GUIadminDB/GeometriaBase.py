@@ -13,7 +13,7 @@ class Geometria:
         self.cuerpo_superior.grid(column=1, row=1, sticky=(N, W, E, S))
         
         self.cuerpo_medio = ttk.Frame(self.raizTk)
-        self.cuerpo_medio.grid(column=1, row=2)
+        self.cuerpo_medio.grid(column=1, row=2, sticky ='nsew')
         
         self.cuerpo_inferior = ttk.Frame(self.raizTk)
         # En la columna 0 y fila 1 de argroot (mitad vertical).
