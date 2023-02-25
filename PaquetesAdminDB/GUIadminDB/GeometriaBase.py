@@ -1,8 +1,5 @@
 from tkinter import * 
 from tkinter import ttk
-from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import descripWidgetsCuerpoSup
-from os.path import exists
-from tkinter import messagebox
 
 class Geometria:
     def __init__(self, argRaiz):   
@@ -40,26 +37,5 @@ class Geometria:
         self.menu1.add_command(label="Comando2 en Menú 1", command="")
         self.menu2.add_command(command="", label="Coman1 en menu2")
         self.menu2.add_command(label="Coman2 en menu2")
-        
-    def ingresarFotosByteaEnPostgre(self, *args):
-        self.top = Toplevel(height = 200, width = 100)
-        self.top.title('Ingreso de Fotos')
-        self.ubicacionFoto = StringVar()
-        #crearWidgetsYsusVarControlEnBaseAdescrip(self, self.top) #self.framePadre.cuerpo_superior)
-        ttk.Label(self.top, text='Ubicación de la foto:').grid(row=1, column=1)
-        self.txtBoxUbicacionFoto = ttk.Entry(self.top, width= 20, textvariable = self.ubicacionFoto)
-        self.txtBoxUbicacionFoto.grid(row=1, column=2)
-        ttk.Button(self.top, width= 7, text = 'Ingresar', command = self.ingresarFotoAbaseDeDatosPostgre).grid(row=1, column=3)
-        self.top.grab_set()
-
-    def ingresarFotoAbaseDeDatosPostgre(self, *args):
-        pass
-        """
-        archivoFoto = self.ubicacionFoto.get()
-        if exists(archivoFoto): 
-            fotoIngreso = FotoToolsPostgreSQL()
-            fotoIngreso.ingresarFotoAPostgre(ubicaciónFoto = archivoFoto)
-        else:
-            messagebox.showerror(message='No se encontró foto: verifique que path y nombre de foto estén correctos. Recuerde incluir extensión .jpg en nombre.', title='Error')
-        """         
+               
               

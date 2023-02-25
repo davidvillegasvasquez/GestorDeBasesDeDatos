@@ -1,6 +1,7 @@
 #1ero definimos los subdicts por tipo de widgets:
 #Para el el subcuerpo superior:
-variableDeControlCuerpoSuperior = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. 
+variableDeControlCuerpoSuperior = {'pathBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tipoBD':{'tipoWidget':'controlvar', 'tipoVar':'texto'}, 'tabla':{'tipoWidget':'controlvar', 'tipoVar':'texto'}} #,...y así para el resto de variables de control. Note que las claves del diccionario contenedor o externo, conformarán los nombres de
+# dichos objetos widgets o variables de control creados con el atributo método, setattr(), en la función crearWidgetsYsusVarControlEnBaseAdescrip() del módulo Crear.py.
 
 infoEntrysCuerpoSup = {'txtBox_PathBD':{'tipoWidget':'entry', 'ancho':'2', 'varcontrol':'pathBD', 'col':2, 'fila':1, 'sticky':'nsew', 'columnspan':2}}
 
@@ -10,15 +11,10 @@ infoLabelsCuerpoSup = {'etiqPathBD':{'tipoWidget':'label', 'texto':'PathBaseDeDa
 
 infoButtonCuerpoSup = { 'botón_conectarBD':{'tipoWidget':'botón', 'ancho':8, 'col':3, 'fila':2, 'sticky':'w', 'texto':'Conectar', 'comando': '', 'columnspan':1}} 
 
-descripWidgetsCuerpoSup = {**variableDeControlCuerpoSuperior, **infoEntrysCuerpoSup, **infoLabelsCuerpoSup, **infoComboboxCuerpoSup, **infoButtonCuerpoSup} #Y así se concatenan los diccionario de diccionarios para decrip de widgets contenidos en cuerpo superior. 
+#Finalmente concatenamos para hacer un diccionario global con la descripción de todos lo widgets:
+descripWidgetsCuerpoSuperior = {**variableDeControlCuerpoSuperior, **infoEntrysCuerpoSup, **infoLabelsCuerpoSup, **infoComboboxCuerpoSup, **infoButtonCuerpoSup} 
 #Ojo, el orden importa: primero **variableDeControl, puesto que los textvariable no dependen de la existencia de los entrys, más no así el caso contrario.
-
-#Para el subcuerpo medio:
-#descripWidgetsCuerpoMedio = {'nombreWidget':{'tipoWidget':'hojaPorEj', 'ancho':9, 'col':0, 'fila':0, 'sticky':'NSWE'}}
-
-#Como el cuerpo inferior generalmente se usa para los widgets de botones, su información está contenida directamente en el módulo WidgetContenedorYBotonesNav.py.
-
-#Información para los widgets de los menús:
 
 #Otros datos constantes:
 BaseDeDatosTipos = ('postgresql', 'sqlite')
+

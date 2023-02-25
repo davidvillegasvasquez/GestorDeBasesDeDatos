@@ -40,7 +40,7 @@ class conexiónConBD:
     def listaDecolumnasDeTabla(self, tabla, *args):
         cursor = self.conexión.cursor()
         cursor.execute(sql.SQL('SELECT * FROM {} LIMIT 0').format(sql.SQL(tabla))) #SQL string composition.
-        listaDeColumnas = [col[0] for col in cursor.description]  #No sirve tupla.                                
+        listaDeColumnas = [col[0] for col in cursor.description]                                
         cursor.close()
         return listaDeColumnas
         
