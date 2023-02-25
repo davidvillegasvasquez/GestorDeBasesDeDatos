@@ -45,14 +45,12 @@ def descripWidgetsSegunColumnasDeLaTabla(columnasDeTabla):
     for columna in columnasDeTabla:
         dictDescripVarControl[columna] = {'tipoWidget':'controlvar', 'tipoVar':'texto'}
         nombreEtiqueta = 'etiqueta_' + columna
-        dictDescripEtiquetas[nombreEtiqueta] = {'tipoWidget':"label", 'texto':'', 'col':1, 'fila':fila, 'sticky':'nsew', 'columnspan':1, 'ancho':12}
-        #dictDescripEtiquetas[nombreEtiqueta]['fila'] = fila
+        dictDescripEtiquetas[nombreEtiqueta] = {'tipoWidget':"label", 'texto':columna +':', 'col':1, 'fila':fila, 'sticky':'w', 'columnspan':1, 'ancho':12}
         nombreTxtBox = 'txtBox_' + columna
-        dictDescripTxtBoxs[nombreTxtBox] = {'tipoWidget':'entry', 'ancho':'2', 'varcontrol':columna, 'col':2, 'fila':fila, 'sticky':'nsew', 'columnspan':1, 'ancho':12}
-        #dictDescripTxtBoxs[nombreTxtBox]['fila'] = fila  
+        dictDescripTxtBoxs[nombreTxtBox] = {'tipoWidget':'entry', 'ancho':'2', 'varcontrol':columna, 'col':2, 'fila':fila, 'sticky':'w', 'columnspan':1, 'ancho':12} 
         fila +=1
         
-    return  {**dictDescripVarControl, **dictDescripEtiquetas, **dictDescripTxtBoxs}  
+    return  {**dictDescripVarControl, **dictDescripTxtBoxs, **dictDescripEtiquetas}  
     
 print(descripWidgetsSegunColumnasDeLaTabla(['campo1', 'campo2', 'campo3']))     
     

@@ -46,6 +46,7 @@ class WidgetMarco:
             self.hojaDeDatos.set_sheet_data(listaDeListasParaTksheetSegunPosicEnPadre(self.posicion)) 
         """
     def conectandoABaseDeDatosUbicadaEnPathDado(self, *args):
+        self.comboBox_Tablas.set('')
         self.objectConnect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
         if self.objectConnect.conexión is not None and self.objectConnect is not None:
             self.comboBox_Tablas['values'] = self.objectConnect.listaDeTablasEnLaBaseDeDatosConectada() #Tarea: tratar de meter todo esto en una lambda. 
@@ -55,7 +56,7 @@ class WidgetMarco:
         self.comboBox_Tablas.selection_clear() #Se debe ejecutar necesariamente si el widget está en estado readonly.            
         [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets en cuerpo medio con esta comprensión de lista. Medio palo.
         
-        #if self.widgetCuerpoMedio is not None: self.widgetCuerpoMedio.destroy()
+        if self.widgetCuerpoMedio is not None: self.widgetCuerpoMedio.destroy()
         
         self.widgetCuerpoMedio = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_medio, descripWidgetsSegunColumnasDeLaTabla(self.objectConnect.listaDecolumnasDeTabla(tabla.widget.get())))
         
