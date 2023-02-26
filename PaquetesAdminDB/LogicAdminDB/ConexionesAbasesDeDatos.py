@@ -24,7 +24,7 @@ class conexiónConBD:
             messagebox.showwarning(message='Sersiorese que proporcionó ambos, path y tipo de base de datos.', title='Atención!!!') 
             
     def consultaSql(self, argsql, *args): 
-        resultado = ()
+        resultado = []
         try:
             cursor = self.conexión.cursor()
             cursor.execute(argsql)
@@ -38,7 +38,6 @@ class conexiónConBD:
     #@consultaSql  ...debo implementar un decorador en el resto de los métodos para eliminar el código repetido. Tarea pendiente.   
     def listaDecolumnasDeTabla(self, tabla, *args):
         cursor = self.conexión.cursor()
-        #No es necesario discriminar tipo de bd, y aplicar composisión de cadena sql si es postgre, pues en este caso no hay riesgo de inyección sql, reduciendo este método a sólo esta proposición con f-string:
         cursor.execute(f'select * from {tabla} limit 0')  
         listaDeColumnas = [col[0] for col in cursor.description]                                
         cursor.close()
