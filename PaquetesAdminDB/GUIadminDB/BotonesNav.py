@@ -3,7 +3,6 @@ from PaquetesAdminDB.GUIadminDB.Crear import *
 from PaquetesAdminDB.LogicAdminDB.Posicionamiento import *
 from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import BaseDeDatosTipos
 from PaquetesAdminDB.LogicAdminDB.ConexionesAbasesDeDatos import conexiónConBD
-from tkinter import messagebox
 from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import descripWidgetsCuerpoSuperior
 
 class WidgetMarco:
@@ -49,25 +48,15 @@ class WidgetMarco:
         self.comboBox_Tablas.set('')
         self.objectConnect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
         if self.objectConnect.conexión is not None and self.objectConnect is not None:
+            [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets en cuerpo medio con esta comprensión de lista. Medio palo.
             self.comboBox_Tablas['values'] = self.objectConnect.listaDeTablasEnLaBaseDeDatosConectada() #Tarea: tratar de meter todo esto en una lambda. 
             
     def dibujarWidgetEnCuerpoMedioDeCamposDeTablaSelecionada(self, tabla, *args): #Si declaro un parámetro formal con un nombre arbitrario en la función enlazada a una acción sobre un widget por medio de 
     #su atributo .bind, tomará el valor seleccionado de dicho widget -una cadena- con el atributo método widget.get(), para este caso, tabla.widget.get()
         self.comboBox_Tablas.selection_clear() #Se debe ejecutar necesariamente si el widget está en estado readonly.            
-        [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets en cuerpo medio con esta comprensión de lista. Medio palo.
-        
+        [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Sino al cambiar de campo quedarán los widget del anterior.
         if self.widgetCuerpoMedio is not None: self.widgetCuerpoMedio.destroy()
         
         self.widgetCuerpoMedio = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_medio, descripWidgetsSegunColumnasDeLaTabla(self.objectConnect.listaDecolumnasDeTabla(tabla.widget.get())))
-        
-        """
-        fila = 1
-        for columna in self.objectConnect.listaDecolumnasDeTabla(tabla.widget.get()):
-            ttk.Label(self.framePadre.cuerpo_medio, text = columna).grid(column=1, row=fila, sticky = 'ew')
-            ttk.Entry(self.framePadre.cuerpo_medio, width = 12).grid(column=2, row=fila, sticky = 'w')
-            fila += 1
-        #Este enfoque no nos servirá, puesto que no tenemos apuntadores para referenciar los widgets, y así poder modificar su valor con los botones de navegación. Hay que construir los dict de dicts, y usar self.__dict__[nombre].set para ello. 
-        """                  
-            
-        
-                                       
+                         
+                                                  

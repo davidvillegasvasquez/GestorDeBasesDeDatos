@@ -1,6 +1,5 @@
 from tkinter import ttk
 from tkinter import *
-#from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import descripWidgetsCuerpoSuperior
 
 #Función triádica, cantidad de parámetros inaceptables:
 def crearWidgetsYsusVarControlEnBaseAdescrip(widget, widgetPadre, descripWidgets):
@@ -51,7 +50,4 @@ def descripWidgetsSegunColumnasDeLaTabla(columnasDeTabla):
         fila +=1
         
     return  {**dictDescripVarControl, **dictDescripTxtBoxs, **dictDescripEtiquetas}  
-    
-print(descripWidgetsSegunColumnasDeLaTabla(['campo1', 'campo2', 'campo3']))     
-    
-                    
+                   

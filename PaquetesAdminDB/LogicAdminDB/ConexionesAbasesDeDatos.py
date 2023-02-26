@@ -2,7 +2,6 @@ from tkinter import messagebox
 from  PaquetesAdminDB.LogicAdminDB.moduloConfiguración import configuración
 import psycopg2
 import sqlite3
-from psycopg2 import sql
 import os
 
 class conexiónConBD:
@@ -39,7 +38,8 @@ class conexiónConBD:
     #@consultaSql  ...debo implementar un decorador en el resto de los métodos para eliminar el código repetido. Tarea pendiente.   
     def listaDecolumnasDeTabla(self, tabla, *args):
         cursor = self.conexión.cursor()
-        cursor.execute(sql.SQL('SELECT * FROM {} LIMIT 0').format(sql.SQL(tabla))) #SQL string composition.
+        #No es necesario discriminar tipo de bd, y aplicar composisión de cadena sql si es postgre, pues en este caso no hay riesgo de inyección sql, reduciendo este método a sólo esta proposición con f-string:
+        cursor.execute(f'select * from {tabla} limit 0')  
         listaDeColumnas = [col[0] for col in cursor.description]                                
         cursor.close()
         return listaDeColumnas
