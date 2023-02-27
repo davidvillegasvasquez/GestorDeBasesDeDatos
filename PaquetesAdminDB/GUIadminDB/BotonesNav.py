@@ -5,6 +5,8 @@ from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import BaseDeDatosTipos
 from PaquetesAdminDB.LogicAdminDB.ConexionesAbasesDeDatos import conexiónConBD
 from PaquetesAdminDB.GUIadminDB.DescripciónDeLosWidgets import descripWidgetsCuerpoSuperior
 
+listaColTablaAnteriorSelec = []
+
 class WidgetMarco:
     def __init__(self, argraiz):
         self.framePadre = argraiz
@@ -47,16 +49,49 @@ class WidgetMarco:
     def conectandoABaseDeDatosUbicadaEnPathDado(self, *args):
         self.comboBox_Tablas.set('')
         self.objectConnect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())
-        if self.objectConnect.conexión is not None and self.objectConnect is not None:
-            [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets en cuerpo medio con esta comprensión de lista. Medio palo.
+        if self.objectConnect.conexión is not None and self.objectConnect is not None:  
+            [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets que hayan queadado en cuerpo medio con esta comprensión de lista. Medio palo.
             self.comboBox_Tablas['values'] = self.objectConnect.listaDeTablasEnLaBaseDeDatosConectada() #Tarea: tratar de meter todo esto en una lambda. 
             
-    def dibujarWidgetEnCuerpoMedioDeCamposDeTablaSelecionada(self, tabla, *args): #Si declaro un parámetro formal con un nombre arbitrario en la función enlazada a una acción sobre un widget por medio de 
-    #su atributo .bind, tomará el valor seleccionado de dicho widget -una cadena- con el atributo método widget.get(), para este caso, tabla.widget.get()
-        self.comboBox_Tablas.selection_clear() #Se debe ejecutar necesariamente si el widget está en estado readonly.            
+    def dibujarWidgetEnCuerpoMedioDeCamposDeTablaSelecionada(self, tablaSeleccionada, *args): #Si declaro un parámetro formal con un nombre arbitrario en la función enlazada a una acción sobre un widget por medio de 
+    #su atributo .bind (self.comboBox_Tablas.bind("<<ComboboxSelected>>", este método)), tomará el valor seleccionado de dicho widget -una cadena mostrada en el widget- con el atributo método widget.get(), para este caso, tablaSeleccionada.widget.get()
+        global listaColTablaAnteriorSelec #Debe ser perdurable para guardar los identificadores de var de control anteriores, por eso la hacemos global.
+        self.comboBox_Tablas.selection_clear() #Se debe ejecutar necesariamente si el widget está en estado readonly.          
         [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Sino al cambiar de campo quedarán los widget del anterior.
-        if self.widgetCuerpoMedio is not None: self.widgetCuerpoMedio.destroy()
+        print('listaColTablaAnteriorSelec', listaColTablaAnteriorSelec)
+        #Ahora procedemos a borrar las variables de control referentes a la tabla anterior, para que no se acumulen:
+        #1 Hacer una función con la implementación de 1 a 2.
+        if listaColTablaAnteriorSelec != []:
+            listaAnteriorParaCorroborBash = listaColTablaAnteriorSelec
+            for col in listaColTablaAnteriorSelec:
+                delattr(self, col) #Fijese que para la función delattr, se usa sólo self para referirse al widget raíz, es decir, self.framePadre.
+        #2
+        listaColTablaAnteriorSelec = self.objectConnect.listaDecolumnasDeTabla(tablaSeleccionada.widget.get()) 
+        self.widgetCuerpoMedio = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_medio, descripWidgetsSegunColumnasDeLaTabla(listaColTablaAnteriorSelec))
         
-        self.widgetCuerpoMedio = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_medio, descripWidgetsSegunColumnasDeLaTabla(self.objectConnect.listaDecolumnasDeTabla(tabla.widget.get())))
-                         
+        #Corroboramos que se van eliminando las variables de control obsoletas correspondientes a widgets que ya no existen:
+        print('self.pathBD =', self.pathBD)
+        print('self.pathBD.get() =', self.pathBD.get())
+        
+        try:
+            print(f'self.{listaColTablaAnteriorSelec[0]} = {self.__dict__[listaColTablaAnteriorSelec[0]]}')
+            print(f'self.{listaColTablaAnteriorSelec}.get() = {self.__dict__[listaColTablaAnteriorSelec[0]].get}') 
+        except:
+            print('self.{listaAnteriorParaCorroborBash[0]} no existe...')
+        
+        try:
+            print(f'self.{listaAnteriorParaCorroborBash[1]} = {self.__dict__[listaAnteriorParaCorroborBash[0]]}')
+            print(f'self.{listaAnteriorParaCorroborBash[1]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[1]].get}')
+        except:
+            print('self.{listaAnteriorParaCorroborBash[1]} no existe...')
+            
+        try:
+            print(f'self.{listaAnteriorParaCorroborBash[2]} = {self.__dict__[listaAnteriorParaCorroborBash[0]]}')
+            print(f'self.{listaAnteriorParaCorroborBash[2]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[2]].get}')
+        except:
+            print('self.{listaAnteriorParaCorroborBash[2]} no existe...')
+            
+        print('---------------------')
+                
+                
                                                   
