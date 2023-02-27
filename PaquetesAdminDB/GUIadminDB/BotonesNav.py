@@ -53,9 +53,12 @@ class WidgetMarco:
             [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Borramos todos los widgets que hayan queadado en cuerpo medio con esta comprensión de lista. Medio palo.
             self.comboBox_Tablas['values'] = self.objectConnect.listaDeTablasEnLaBaseDeDatosConectada() #Tarea: tratar de meter todo esto en una lambda. 
             
-    def dibujarWidgetEnCuerpoMedioDeCamposDeTablaSelecionada(self, tablaSeleccionada, *args): #Si declaro un parámetro formal con un nombre arbitrario en la función enlazada a una acción sobre un widget por medio de 
-    #su atributo .bind (self.comboBox_Tablas.bind("<<ComboboxSelected>>", este método)), tomará el valor seleccionado de dicho widget -una cadena mostrada en el widget- con el atributo método widget.get(), para este caso, tablaSeleccionada.widget.get()
-        global listaColTablaAnteriorSelec #Debe ser perdurable para guardar los identificadores de var de control anteriores, por eso la hacemos global.
+    def dibujarWidgetEnCuerpoMedioDeCamposDeTablaSelecionada(self, tablaSeleccionada, *args): #En un método disparado por un evento virtual de widget con capacidad para ello, enlazado por medio de 
+    #su atributo .bind (self.comboBox_Tablas.bind("<<ComboboxSelected>>", este método)), si declaro un parámetro formal con un nombre arbitrario en dicho método o función enlazado, en dicho parámetro se depositará
+    # el valor seleccionado en dicho widget -una cadena mostrada en este- con el atributo método widget.get(), para este caso, tablaSeleccionada.widget.get()
+  
+        global listaColTablaAnteriorSelec #Debe ser perdurable para guardar los identificadores de var de control anteriores, por eso la hacemos global y su definición respectiva en este módulo.
+        listaAnteriorParaCorroborBash = ['col1', 'col2', 'col3', 'col4']
         self.comboBox_Tablas.selection_clear() #Se debe ejecutar necesariamente si el widget está en estado readonly.          
         [widget.destroy() for widget in self.framePadre.cuerpo_medio.grid_slaves()] #Sino al cambiar de campo quedarán los widget del anterior.
         print('listaColTablaAnteriorSelec', listaColTablaAnteriorSelec)
@@ -66,30 +69,30 @@ class WidgetMarco:
             for col in listaColTablaAnteriorSelec:
                 delattr(self, col) #Fijese que para la función delattr, se usa sólo self para referirse al widget raíz, es decir, self.framePadre.
         #2
+        #Según lo anterior, creo que el enfoque más práctico y eficiente es no usar variables de control, sino tomar el valor del texto mostrado por el widget directmente, por medio de su propiedad .get() y .set().
         listaColTablaAnteriorSelec = self.objectConnect.listaDecolumnasDeTabla(tablaSeleccionada.widget.get()) 
         self.widgetCuerpoMedio = crearWidgetsYsusVarControlEnBaseAdescrip(self, self.framePadre.cuerpo_medio, descripWidgetsSegunColumnasDeLaTabla(listaColTablaAnteriorSelec))
         
-        #Corroboramos que se van eliminando las variables de control obsoletas correspondientes a widgets que ya no existen:
+        #Corroboramos que se van eliminando las variables de control obsoletas correspondientes a widgets que ya no existen de la tabla anterior:
         print('self.pathBD =', self.pathBD)
         print('self.pathBD.get() =', self.pathBD.get())
+        try:
+            print(f'self.{listaColTablaAnteriorSelec[1]} = {self.__dict__[listaColTablaAnteriorSelec[1]]}')
+            print(f'self.{listaColTablaAnteriorSelec[1]}.get() = {self.__dict__[listaColTablaAnteriorSelec[1]].get()}') 
+        except:
+            print('self.{listaColTablaAnteriorSelec[1]} ya no existe...')
         
         try:
-            print(f'self.{listaColTablaAnteriorSelec[0]} = {self.__dict__[listaColTablaAnteriorSelec[0]]}')
-            print(f'self.{listaColTablaAnteriorSelec}.get() = {self.__dict__[listaColTablaAnteriorSelec[0]].get}') 
+            print(f'self.{listaAnteriorParaCorroborBash[1]} = {self.__dict__[listaAnteriorParaCorroborBash[1]]}')
+            print(f'self.{listaAnteriorParaCorroborBash[1]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[1]].get()}')
         except:
-            print('self.{listaAnteriorParaCorroborBash[0]} no existe...')
-        
-        try:
-            print(f'self.{listaAnteriorParaCorroborBash[1]} = {self.__dict__[listaAnteriorParaCorroborBash[0]]}')
-            print(f'self.{listaAnteriorParaCorroborBash[1]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[1]].get}')
-        except:
-            print('self.{listaAnteriorParaCorroborBash[1]} no existe...')
+            print(f'self.{listaAnteriorParaCorroborBash[1]} ya no existe...')
             
         try:
-            print(f'self.{listaAnteriorParaCorroborBash[2]} = {self.__dict__[listaAnteriorParaCorroborBash[0]]}')
-            print(f'self.{listaAnteriorParaCorroborBash[2]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[2]].get}')
+            print(f'self.{listaAnteriorParaCorroborBash[2]} = {self.__dict__[listaAnteriorParaCorroborBash[2]]}')
+            print(f'self.{listaAnteriorParaCorroborBash[2]}.get() = {self.__dict__[listaAnteriorParaCorroborBash[2]].get()}')
         except:
-            print('self.{listaAnteriorParaCorroborBash[2]} no existe...')
+            print(f'self.{listaAnteriorParaCorroborBash[2]} ya no existe...')
             
         print('---------------------')
                 

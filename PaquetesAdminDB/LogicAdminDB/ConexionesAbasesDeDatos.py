@@ -1,5 +1,5 @@
 from tkinter import messagebox
-from  PaquetesAdminDB.LogicAdminDB.moduloConfiguración import configuración
+from  PaquetesAdminDB.LogicAdminDB.ModuloConfiguración import configuración
 import psycopg2
 import sqlite3
 import os
