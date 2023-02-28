@@ -1,10 +1,10 @@
 from tkinter import messagebox
 
-
-def nuevaPosicionLuegoDePulsarBoton(accion, posicionActual):
+#Otra función triádica que no se puede evitar: se ve que tanto más dinámica las implementaciones, más parámetros exigen.
+def nuevaPosicionFilaLuegoDePulsarBoton(accion, posicionActual, argLongitud):
     posicion = posicionActual
     primeraPosicion = 0
-    longitud = 5
+    longitud = argLongitud
    
     if accion == "irAprimerRegistro": posicion = primeraPosicion
     

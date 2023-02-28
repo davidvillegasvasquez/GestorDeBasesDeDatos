@@ -41,11 +41,11 @@ class conexiónConBD:
         cursor.execute(f'select * from {tabla} limit 0')  
         listaDeColumnas = [col[0] for col in cursor.description]                                
         cursor.close()
-        return listaDeColumnas
+        return listaDeColumnas      
         
     def listaDeTablasEnLaBaseDeDatosConectada(self, *args):
         if self.tipo == 'postgresql': argsql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
         if self.tipo == 'sqlite': argsql = 'SELECT name FROM sqlite_master WHERE type ="table" AND name NOT LIKE "sqlite_%"'
-        return self.consultaSql(argsql)     
+        return self.consultaSql(argsql)             
                 
                                      
