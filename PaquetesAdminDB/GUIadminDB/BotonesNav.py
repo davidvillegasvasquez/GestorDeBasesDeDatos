@@ -40,17 +40,21 @@ class WidgetMarco:
     def actualizarWidgetsEnNuevaPosicion(self, *args): 
         #Primero, actualizamos la posiciónd dentro del widget:
         self.posicionFilaActual =  args[0] # Recuerde que args[0] = nuevaPosicionFilaLuegoDePulsarBoton(literal, self.posicionFilaActual).
-        nroElemnEnTupla = 0
+        nroColEnTablaActual = 0
         for columna in self.columnasDeTablaActual:
-            #Recuerde que el indice de elemento en self.columnasDeTablaActual coincide con nroColEnTupla. 
+            #Recuerde que el indice de elemento en la lista self.columnasDeTablaActual es nroColEnTablaActual. 
             #Reintegramos el nombre de los widgets según columna:
             nombreTxtBox = 'txtBox_' + columna
             #Y así colocamos texto en un ttk.entry, sin usar variable de contro:
-            self.__dict__[nombreTxtBox].delete(0, "end") #Debemos borrar manualmente lo que había antes.
-            self.__dict__[nombreTxtBox].insert(-1, str(self.registrosEnTablaActual[self.posicionFilaActual][nroElemnEnTupla]))
-            
-            nroElemnEnTupla += 1     
-                
+            self.__dict__[nombreTxtBox]['state'] = 'normal' #o 'enabled'. Para poder insertar y borrar debemos habilitarlo.
+            self.__dict__[nombreTxtBox].delete(0, 'end') #Debemos borrar manualmente lo que había antes en el widget. El end sólo en minúsculas.
+            if self.registrosEnTablaActual != []:
+                self.__dict__[nombreTxtBox].insert('end', str(self.registrosEnTablaActual[self.posicionFilaActual][nroColEnTablaActual]))
+                self.__dict__[nombreTxtBox]['state'] = 'readonly' #O 'disabled'.
+                nroColEnTablaActual += 1 
+            else:
+                messagebox.showinfo(f'Tabla {self.comboBox_Tablas.get()}', f'No hay registros en la tabla {self.comboBox_Tablas.get()}.')    
+                break
     def conectandoABaseDeDatosUbicadaEnPathDado(self, *args):
         self.comboBox_Tablas.set('')
         self.objectConnect = conexiónConBD(self.txtBox_PathBD.get(), self.comboBox_tipoBD.get())

@@ -44,8 +44,8 @@ class conexiónConBD:
         return listaDeColumnas      
         
     def listaDeTablasEnLaBaseDeDatosConectada(self, *args):
-        if self.tipo == 'postgresql': argsql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
+        if self.tipo == 'postgresql': argsql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public' and table_type='BASE TABLE' and table_name not like 'django_%' and table_name not like 'auth_%'"
         if self.tipo == 'sqlite': argsql = 'SELECT name FROM sqlite_master WHERE type ="table" AND name NOT LIKE "sqlite_%"'
         return self.consultaSql(argsql)             
-                
+        #and table_name is not like ('django_%' or  'auth_%r)   or  'auth_%'     
                                      
